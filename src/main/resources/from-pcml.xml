@@ -1,0 +1,21 @@
+<pcml version="6.0">
+    <struct name="ASSIGNEDDRIVER">
+        <data name="STAKEHOLDER" type="packed" length="13" precision="0" usage="inherit" />
+        <data name="DRIVERID" type="packed" length="7" precision="0" usage="inherit" />
+        <data name="EMPLOYEECOMP" type="packed" length="5" precision="0" usage="inherit" />
+        <data name="EMPLOYEEID" type="packed" length="7" precision="0" usage="inherit" />
+        <data name="SEAT" type="packed" length="1" precision="0" usage="inherit" />
+    </struct>
+    <struct name="TRUCKDETAILSDS">
+        <data name="DEVICEOUT" type="char" length="10" usage="inherit" />
+        <data name="TRUCKOUT" type="char" length="10" usage="inherit" />
+        <data name="CURDRIVERID" type="char" length="10" usage="inherit" />
+        <data name="ASGDRIVERIDS" type="struct" struct="ASSIGNEDDRIVER" count="10" usage="inherit" />
+    </struct>
+    <program name="GETDRIVERS" path="/QSYS.LIB/MULEDEMOS.LIB/GETDRVRPGM.PGM">
+        <data name="DEVICEID" type="char" length="10" usage="input" />
+        <data name="TRUCKID" type="char" length="10" usage="input" />
+        <data name="REQUESTTIME" type="char" length="10" usage="input" />
+        <data name="TRUCKDETAILS" type="struct" struct="TRUCKDETAILSDS" count="10" usage="inputoutput" />
+    </program>
+</pcml>                                                                                                        

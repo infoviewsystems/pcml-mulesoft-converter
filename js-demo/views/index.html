@@ -1,0 +1,36 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <link rel="stylesheet" href="/stylesheets/index.css"/>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<!--<input type='file' id="i_file" onchange="openFile(event)"><br>-->
+<div class="topdiv"  id="topdiv" contentEditable="true">
+    <h2 id="PCML" contentEditable="false">PCML Format</h2>
+    <textarea id='inputXML' >
+    </textarea>
+</div>
+<div> <button id="convert">Convert</button></div>
+<div class="middlediv" id="middlediv" contentEditable="true" style = "display:none">
+        <h2 id="AS400" contentEditable="false">AS400 Program Definition</h2>
+        <pre id='outputXML'>
+        </pre>
+</div>
+<div class="bottomdiv" id="bottomdiv" contentEditable="true" style = "display:none">
+        <h2 id="AS400Raml" contentEditable="false">AS400 Program RAML</h2>
+        <pre id='outputXMLR'>
+        </pre>
+</div>
+<!--<button id="convert">Convert</button>-->
+
+</body>
+<script src="/javascripts/xml-parse.js"></script>
+</html>

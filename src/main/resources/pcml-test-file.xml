@@ -1,0 +1,17 @@
+<pcml version="6.0">
+
+    <struct name="LINESINFMT">
+        <data name="ITEMNO" type="packed" length="8" precision="0" usage="inherit" />
+        <data name="QTY" type="packed" length="5" precision="0" usage="inherit" />
+        <data name="PRICE" type="packed" length="10" precision="2" usage="inherit" />
+    </struct>
+
+    <program name="MAIN" path="/QSYS.LIB/MULEDEMOS.LIB/CRTORDER.PGM">
+        <data name="SRCORDER" type="packed" length="8" precision="0" usage="input" />
+        <data name="TRGTORDER" type="packed" length="8" precision="0" usage="output" />
+        <data name="ORDAMT" type="packed" length="10" precision="2" usage="inputoutput" />
+        <data name="ORDSTS" type="char" length="10" usage="inputoutput" />
+        <data name="NBRLINES" type="packed" length="4" precision="0" usage="inputoutput" />
+        <data name="LINESIN" type="struct" struct="LINESINFMT" count="10" usage="inputoutput" />
+    </program>
+</pcml>

@@ -1,0 +1,16 @@
+<as400:program-call-processor doc:name="Program call processor" config-ref="AS400_Config_pgm" programName="CRTORDER" programLibrary="${as400.library}">
+    <as400:parameters>
+        <as400:parameter parameterName="srcOrder" dataType="PACKED" length="8" usage="INOUT" parmValue="#[payload.orderNo]" />
+        <as400:parameter parameterName="trgtOrder" dataType="PACKED" length="8" usage="INOUT" parmValue="#[payload.targetOrd]" />
+        <as400:parameter parameterName="ordAmt" dataType="PACKED" length="10" usage="INOUT" parmValue="#[payload.orderAmt]" decimalPositions="2" />
+        <as400:parameter parameterName="ordSts" dataType="STRING" length="10" usage="INOUT" parmValue="#[payload.orderSts]" />
+        <as400:parameter parameterName="nbrLines" dataType="PACKED" length="4" usage="IN" parmValue="#[payload.noOfItems]" />
+        <as400:parameter parameterName="linesIn" dataType="STRUCTURE" usage="INOUT" count="10" parmValue="#[payload.linesIn]">
+            <as400:data-structure-elements>
+			<as400:parameter parameterName="itemNo" dataType="STRING" length="10" usage="INOUT" />
+			<as400:parameter parameterName="qty" dataType="PACKED" length="5" usage="INOUT" />
+            <as400:parameter parameterName="price" dataType="PACKED" length="10" decimalPositions="2" usage="INOUT" />
+			</as400:data-structure-elements>
+        </as400:parameter>
+    </as400:parameters>
+</as400:program-call-processor>

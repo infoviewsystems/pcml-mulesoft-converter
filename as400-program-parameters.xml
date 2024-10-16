@@ -1,0 +1,23 @@
+<as400:program-call-processor config-ref="AS400_Config" programLibrary="MULEDEMOS" programName="GETDRVRPGM">
+    <as400:parameters>
+        <as400:parameter dataType="STRING" length="10" parameterName="DEVICEID" parmValue="#[XXXXXXXXXX]" usage="IN"/>
+        <as400:parameter dataType="STRING" length="10" parameterName="TRUCKID" parmValue="#[XXXXXXXXXX]" usage="IN"/>
+        <as400:parameter dataType="STRING" length="10" parameterName="REQUESTTIME" parmValue="#[XXXXXXXXXX]" usage="IN"/>
+        <as400:parameter count="10" dataType="STRUCTURE" parameterName="TRUCKDETAILS" usage="INOUT">
+            <as400:data-structure-elements>
+                <as400:parameter dataType="STRING" length="10" parameterName="DEVICEOUT" parmValue="#[XXXXXXXXXX]" usage="INOUT"/>
+                <as400:parameter dataType="STRING" length="10" parameterName="TRUCKOUT" parmValue="#[XXXXXXXXXX]" usage="INOUT"/>
+                <as400:parameter dataType="STRING" length="10" parameterName="CURDRIVERID" parmValue="#[XXXXXXXXXX]" usage="INOUT"/>
+                <as400:parameter count="10" dataType="STRUCTURE" parameterName="ASGDRIVERIDS" usage="INOUT">
+                    <as400:data-structure-elements>
+                        <as400:parameter dataType="PACKED" decimalPositions="0" length="13" parameterName="STAKEHOLDER" parmValue="#[9.99999999999]" usage="INOUT"/>
+                        <as400:parameter dataType="PACKED" decimalPositions="0" length="7" parameterName="DRIVERID" parmValue="#[9.99999]" usage="INOUT"/>
+                        <as400:parameter dataType="PACKED" decimalPositions="0" length="5" parameterName="EMPLOYEECOMP" parmValue="#[9.999]" usage="INOUT"/>
+                        <as400:parameter dataType="PACKED" decimalPositions="0" length="7" parameterName="EMPLOYEEID" parmValue="#[9.99999]" usage="INOUT"/>
+                        <as400:parameter dataType="PACKED" decimalPositions="0" length="1" parameterName="SEAT" parmValue="#[9]" usage="INOUT"/>
+                    </as400:data-structure-elements>
+                </as400:parameter>
+            </as400:data-structure-elements>
+        </as400:parameter>
+    </as400:parameters>
+</as400:program-call-processor>
