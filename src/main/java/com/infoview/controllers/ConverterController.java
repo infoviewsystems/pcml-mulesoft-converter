@@ -1,13 +1,11 @@
 package com.infoview.controllers;
 import com.infoview.converter.Converter;
 import com.infoview.converter.GenerateExampleForRaml;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(value = "/api")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "*")
 public class ConverterController {
     @Autowired
     GenerateExampleForRaml generateExampleForRaml;

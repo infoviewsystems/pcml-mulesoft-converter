@@ -24,11 +24,32 @@ xml=document.getElementById("inputXML").value;
 $("#convert").on("click", () =>{
 xml=document.getElementById("inputXML").value;
 if(xml.length > 4){
- convertToProgramCallDef()
+  convertToProgramCallDef()
 }else{
 alert("Please Enter The Input!!");
 }
+})
 
+
+
+$("#middledivcopy").on("click", () =>{
+var programDef=document.getElementById("outputXML");
+var range = document.createRange();
+range.selectNode(programDef);
+window.getSelection().removeAllRanges();
+window.getSelection().addRange(range);
+document.execCommand('copy');
+window.getSelection().removeAllRanges();
+})
+
+$("#bottomdivcopy").on("click", () =>{
+var programDef=document.getElementById("outputXMLR");
+var range = document.createRange();
+range.selectNode(programDef);
+window.getSelection().removeAllRanges();
+window.getSelection().addRange(range);
+document.execCommand('copy');
+window.getSelection().removeAllRanges();
 })
 
 let convertToRaml = (raml) =>{

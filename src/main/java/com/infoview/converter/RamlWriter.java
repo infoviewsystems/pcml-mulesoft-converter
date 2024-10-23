@@ -1,5 +1,4 @@
 package com.infoview.converter;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.raml.emitter.RamlEmitter;
 import org.raml.model.*;
@@ -7,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+
 @Component
 public class RamlWriter {
     Raml raml = new Raml();

@@ -24,7 +24,13 @@ public class GenerateExampleForRaml {
     @Autowired
     RamlWriter ramlWriter;
     public  String convertToJsonFile(String convertPCMLtoAS400ProgramCallDefinitionFromString) {
-        JSONObject xmlToJson = XML.toJSONObject(convertPCMLtoAS400ProgramCallDefinitionFromString);
+
+        String s= convertPCMLtoAS400ProgramCallDefinitionFromString ;
+        String s1 =s.substring(s.indexOf("<as400:program-call-processor"));
+        s1.trim();
+        System.out.println(s1);
+
+        JSONObject xmlToJson = XML.toJSONObject(s1);
         programName  = (String) xmlToJson.getJSONObject(PROGRAM_CALL_PROCESSOR_KEY).get(PROGRAM_NAME_AS_KAY);
         JSONArray getActualJSONToParse= xmlToJson.getJSONObject(PROGRAM_CALL_PROCESSOR_KEY).getJSONObject(AS400_PARAMETERS).getJSONArray(AS400_PARAMETER);
         JSONArray jsonArray = new JSONArray(getActualJSONToParse.toString());
@@ -54,7 +60,7 @@ public class GenerateExampleForRaml {
                 matcherItemType.find();
                 matcherItemUsage.find();
                 try {
-                    Object itemValue = generateParmValue(matcherItemValue.group(1).replace("#[", "").replace("]", ""), matcherItemType.group(1));
+                    Object itemValue = generateParmValue(matcherItemValue.group(1).replace("#['", "").replace("']", ""), matcherItemType.group(1));
                     if(matcherItemUsage.group(1).equals("IN")) {
                         results.put(matcherItemName.group(1), itemValue);
                     } else if(matcherItemUsage.group(1).equals("OUT")){
@@ -98,15 +104,18 @@ public class GenerateExampleForRaml {
                         if(!((JSONObject) nestedJsonItem).get("dataType").equals(STRUCTURE)){
                             try {
                                 if(((JSONObject) nestedJsonItem).get("usage").equals("IN")) {
-                                    Object nestedItemValue = generateParmValue(((JSONObject) nestedJsonItem).get(PARAMETER_VALUE).toString().replace("#[", "").replace("]", ""), ((JSONObject) nestedJsonItem).get("dataType").toString());
+                                    Object nestedItemValue = generateParmValueForNestedElements(
+                                            ((JSONObject) nestedJsonItem).get("dataType").toString());
                                     finalNestedHMap.put(((JSONObject) nestedJsonItem).get(PARAMETER_NAME).toString(), nestedItemValue);
                                 } else if(((JSONObject) nestedJsonItem).get("usage").equals("OUT")) {
-                                    Object nestedItemValue = generateParmValue(((JSONObject) nestedJsonItem).get(PARAMETER_VALUE).toString().replace("#[", "").replace("]", ""), ((JSONObject) nestedJsonItem).get("dataType").toString());
-                                    finalResponseNestedHMap.put(((JSONObject) nestedJsonItem).get(PARAMETER_NAME).toString(), nestedItemValue);
+                                    Object nestedItemValue = generateParmValueForNestedElements(
+                                            ((JSONObject) nestedJsonItem).get("dataType").toString());
+                                   finalResponseNestedHMap.put(((JSONObject) nestedJsonItem).get(PARAMETER_NAME).toString(), nestedItemValue);
                                 } else if(((JSONObject) nestedJsonItem).get("usage").equals("INOUT")) {
-                                    Object nestedItemValue = generateParmValue(((JSONObject) nestedJsonItem).get(PARAMETER_VALUE).toString().replace("#[", "").replace("]", ""), ((JSONObject) nestedJsonItem).get("dataType").toString());
+                                    Object nestedItemValue = generateParmValueForNestedElements(
+                                            ((JSONObject) nestedJsonItem).get("dataType").toString());
                                     finalNestedHMap.put(((JSONObject) nestedJsonItem).get(PARAMETER_NAME).toString(), nestedItemValue);
-                                    finalResponseNestedHMap.put(((JSONObject) nestedJsonItem).get(PARAMETER_NAME).toString(), nestedItemValue);
+                                   finalResponseNestedHMap.put(((JSONObject) nestedJsonItem).get(PARAMETER_NAME).toString(), nestedItemValue);
                                 }
                             } catch (IllegalStateException ie){
                                 System.out.println("Exception appeared: " + ie);
@@ -162,10 +171,43 @@ public class GenerateExampleForRaml {
         });
         return ramlWriter.test(programName,results,resultResponse);
     }
-
-   private Object generateParmValue(String itemValue, String dataType) {
+    private Object generateParmValueForNestedElements(String dataType) {
         Object formattedValue = null;
-       DecimalFormat df;
+        DecimalFormat df;
+        switch(dataType){
+            case "STRING":
+                formattedValue=String.valueOf("XXXXXXXXXX");
+                break;
+            case "PACKED":
+                formattedValue = Double.valueOf("0.00");
+                break;
+            case "INTEGER":
+            case "BYTE":
+                formattedValue = 0;
+                break;
+            case "FLOAT":
+                formattedValue = Double.valueOf("0.0");
+                break;
+            case "ZONED":
+                formattedValue = Double.valueOf("0.000");
+                break;
+            case "DATE":
+                formattedValue = new Date();
+                break;
+            case "TIMESTAMP":
+                formattedValue = new Timer();
+                break;
+            case "TIME":
+                formattedValue = new Date().getTime();
+                break;
+            default:
+                break;
+        }
+        return formattedValue;
+    }
+    private Object generateParmValue(String itemValue, String dataType) {
+        Object formattedValue = null;
+        DecimalFormat df;
         switch(dataType){
             case "STRING":
                 if(itemValue != null) {
